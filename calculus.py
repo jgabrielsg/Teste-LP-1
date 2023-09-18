@@ -22,7 +22,7 @@ def input_data():
     Solicita ao usuário duas datas no formato "dia de mês de ano" separadas por " - ".
     """
     try:
-        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - ': ")
+        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - '\nOu passe o nome do arquivo que tiver as datas! ")
         if ".txt" in datas: # Se o input contém ".txt", é um arquivo.
             datas = ler_arquivo(datas)
         return datas
@@ -86,6 +86,3 @@ def dias_entre_datas():
         data1, data2 = transform_data(datas)
         diferenca_dias = abs((data2 - data1).days)
         print(f"A diferença em dias entre as datas é: {diferenca_dias}")
-
-if __name__ == "__main__":
-    datas = dias_entre_datas()
