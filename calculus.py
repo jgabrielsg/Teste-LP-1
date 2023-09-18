@@ -21,7 +21,9 @@ def input_data():
     Solicita ao usuário duas datas no formato "dia de mês de ano" separadas por " - ".
     """
     try:
-        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - ': ").split(" - ")
+        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - ': ")
+        if ".txt" in datas:
+            datas = ler_arquivo(datas)
         return datas
     except Exception as e:
         print("Erro!", (e))
@@ -37,6 +39,9 @@ def transform_data(datas):
     Returns:
         tuple: Uma tupla contendo os objetos datetime correspondentes às datas.
     """
+    
+    datas = datas.split(" - ")
+    
     data1 = datas[0]
     data2 = datas[1]
 
@@ -60,6 +65,16 @@ def transform_data(datas):
     data_completa2 = pd.to_datetime(data_completa2, format="%d-%m-%Y")
 
     return data_completa1, data_completa2
+
+def ler_arquivo(nome_arquivo):
+    try:
+        with open(nome_arquivo, 'r') as arquivo:
+            conteudo = arquivo.read()
+            return conteudo
+    except FileNotFoundError:
+        print(f"O arquivo '{nome_arquivo}' não foi encontrado.")
+    except Exception as e:
+        print(f"Ocorreu um erro: {str(e)}")
 
 if __name__ == "__main__":
     datas = input_data()
