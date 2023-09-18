@@ -18,18 +18,39 @@ meses = {
 
 def input_data():
     """
-    Solicita as datas ao usuário.
+    Solicita ao usuário que escolha entre duas opções:
+    (1) Digitar duas datas no formato 'dia de mês de ano' separadas por ' - '
+    (2) Passar o nome de um arquivo .txt que contém as datas
 
     Returns
     -------
     datas : str
-        Datas ou arquivo com datas a ser entregue para calcular a diferença.
+        As datas em string.
+
     """
+    
     try:
-        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - '\nOu passe o nome do arquivo que tiver as datas:")
-        if ".txt" in datas: # Se o input contém ".txt", é um arquivo.
-            datas = ler_arquivo(datas)
-        return datas
+        while True:
+            print("Escolha uma opção:")
+            print("(1) Digitar datas")
+            print("(2) Passar um arquivo .txt")
+
+            escolha = input("Digite o número da opção desejada: ")
+            
+            if escolha == "1":
+                datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - ': ")
+                return datas
+            
+            elif escolha == "2":
+                arquivo = input("Digite o nome do arquivo .txt que contém as datas: ")
+                if arquivo.endswith(".txt"):
+                    datas = ler_arquivo(arquivo)
+                    return datas
+                else:
+                    print("O arquivo deve ter extensão .txt.")
+                    
+            else:
+                print("Opção inválida. Escolha uma opção válida (1 ou 2).")
     
     except Exception as e:
         print("Erro!", (e))
@@ -91,7 +112,6 @@ def ler_arquivo(nome_arquivo):
     -------
     conteudo : str
         O conteúdo do arquivo passado.
-
     """
     
     try:
@@ -107,15 +127,16 @@ def ler_arquivo(nome_arquivo):
 
 def dias_entre_datas():
     """
-    
+    Calcula a diferença de dias entre as datas dadas.
 
     Returns
     -------
-    diferenca_dias : TYPE
-        DESCRIPTION.
-
+    diferenca_dias : int
+        Número de dias entre uma data e outra.
     """
+    
     datas = input_data()
+
     if datas:
         data1, data2 = transform_data(datas)
         diferenca_dias = abs((data2 - data1).days)
