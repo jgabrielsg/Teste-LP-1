@@ -16,30 +16,40 @@ meses = {
     "Dezembro": 12
 }
 
-# Função para solicitar datas ao usuário, seja via console ou arquivo.
 def input_data():
     """
-    Solicita ao usuário duas datas no formato "dia de mês de ano" separadas por " - ".
+    Solicita as datas ao usuário.
+
+    Returns
+    -------
+    datas : str
+        Datas ou arquivo com datas a ser entregue para calcular a diferença.
     """
     try:
-        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - '\nOu passe o nome do arquivo que tiver as datas! ")
+        datas = input("Digite duas datas no formato 'dia de mês de ano' separadas por ' - '\nOu passe o nome do arquivo que tiver as datas:")
         if ".txt" in datas: # Se o input contém ".txt", é um arquivo.
             datas = ler_arquivo(datas)
         return datas
+    
     except Exception as e:
         print("Erro!", (e))
         return None
 
-# Função para converter as datas no formato "dia de mês de ano" em objetos datetime.
 def transform_data(datas):
     """
-    Converte as datas no formato "dia de mês de ano" para objetos datetime.
+    Converte as datas no formato exigido para objetos em datetime.
 
-    Args:
-        datas (list): Uma lista contendo as duas datas no formato "dia de mês de ano".
+    Parameters
+    ----------
+    datas : str
+       Datas ou arquivo com datas a ser entregue para calcular a diferença.
 
-    Returns:
-        tuple: Uma tupla contendo os objetos datetime correspondentes às datas.
+    Returns
+    -------
+    data_completa1 : datetime
+        Primeira data entregue convertida para datetime.
+    data_completa2 : datetime
+        Segunda data entregue convertida para datetime.
     """
     
     datas = datas.split(" - ")
@@ -68,21 +78,46 @@ def transform_data(datas):
 
     return data_completa1, data_completa2
 
-# Função para ler o conteúdo de um arquivo.
 def ler_arquivo(nome_arquivo):
+    """
+    Lê arquivo .txt para calcular a diferença entre as datas contidas nele.
+
+    Parameters
+    ----------
+    nome_arquivo : str
+       Nome do arquivo a ser chamado.
+
+    Returns
+    -------
+    conteudo : str
+        O conteúdo do arquivo passado.
+
+    """
+    
     try:
         with open(nome_arquivo, 'r') as arquivo:
             conteudo = arquivo.read()
             return conteudo
+        
     except FileNotFoundError:
         print(f"O arquivo '{nome_arquivo}' não foi encontrado.")
+        
     except Exception as e:
         print(f"Ocorreu um erro: {str(e)}")
 
 def dias_entre_datas():
+    """
+    
+
+    Returns
+    -------
+    diferenca_dias : TYPE
+        DESCRIPTION.
+
+    """
     datas = input_data()
-    transform_data(datas)
     if datas:
         data1, data2 = transform_data(datas)
         diferenca_dias = abs((data2 - data1).days)
-        print(f"A diferença em dias entre as datas é: {diferenca_dias}")
+    
+    return diferenca_dias
