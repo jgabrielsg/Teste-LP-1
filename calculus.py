@@ -73,31 +73,36 @@ def transform_data(datas):
         Segunda data entregue convertida para datetime.
     """
     
-    datas = datas.split(" - ")
+    try:
+        datas = datas.split(" - ")
+        
+        data1 = datas[0]
+        data2 = datas[1]
+
+        data1 = data1.split(" de ")
+        data2 = data2.split(" de ")
+
+        dia1 = data1[0]
+        mes1 = data1[1]
+        numero_mes1 = meses.get(mes1)
+        ano1 = data1[2]
+
+        dia2 = data2[0]
+        mes2 = data2[1]
+        numero_mes2 = meses.get(mes2)
+        ano2 = data2[2]
+
+        data_completa1 = str(dia1) + "-" + str(numero_mes1) + "-" + str(ano1)
+        data_completa2 = str(dia2) + "-" + str(numero_mes2) + "-" + str(ano2)
+
+        data_completa1 = pd.to_datetime(data_completa1, format='%d-%m-%Y')
+        data_completa2 = pd.to_datetime(data_completa2, format="%d-%m-%Y")
+
+        return data_completa1, data_completa2
     
-    data1 = datas[0]
-    data2 = datas[1]
-
-    data1 = data1.split(" de ")
-    data2 = data2.split(" de ")
-
-    dia1 = data1[0]
-    mes1 = data1[1]
-    numero_mes1 = meses.get(mes1)
-    ano1 = data1[2]
-
-    dia2 = data2[0]
-    mes2 = data2[1]
-    numero_mes2 = meses.get(mes2)
-    ano2 = data2[2]
-
-    data_completa1 = str(dia1) + "-" + str(numero_mes1) + "-" + str(ano1)
-    data_completa2 = str(dia2) + "-" + str(numero_mes2) + "-" + str(ano2)
-
-    data_completa1 = pd.to_datetime(data_completa1, format='%d-%m-%Y')
-    data_completa2 = pd.to_datetime(data_completa2, format="%d-%m-%Y")
-
-    return data_completa1, data_completa2
+    except Exception as e:
+        print("Erro!", (e))
+        return None
 
 def ler_arquivo(nome_arquivo):
     """
