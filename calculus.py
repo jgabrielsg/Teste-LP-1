@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 
 # Dicionário de meses
 meses = {
@@ -28,12 +29,14 @@ def input_data():
         As datas em string.
 
     """
-    
+    end = False
+
     try:
         while True:
             print("Escolha uma opção:")
             print("(1) Digitar datas")
             print("(2) Passar um arquivo .txt")
+            print("(3) Encerrar")
 
             escolha = input("Digite o número da opção desejada: ")
             
@@ -42,15 +45,18 @@ def input_data():
                 return datas
             
             elif escolha == "2":
-                arquivo = input("Digite o nome do arquivo .txt que contém as datas: ")
+                arquivo = input("Digite o nome do arquivo .txt que contém as datas:")
                 if arquivo.endswith(".txt"):
                     datas = ler_arquivo(arquivo)
                     return datas
                 else:
-                    print("O arquivo deve ter extensão .txt.")
-                    
+                    print("O arquivo deve ter extensão .txt.\n")
+                
+            elif escolha == "3":
+                print("Adeus!")
+                sys.exit()
             else:
-                print("Opção inválida. Escolha uma opção válida (1 ou 2).")
+                print("Opção inválida. Escolha uma opção válida (1, 2 ou 3).\n")
     
     except Exception as e:
         print("Erro!", (e))
